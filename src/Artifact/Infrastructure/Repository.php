@@ -19,16 +19,18 @@ use function trim;
 
 class Repository
 {
+    public function __construct(private readonly string $bearerToken)
+    {}
     /**
      * @return Artifact[]
      * @throws NoArtifact
      * @throws CurlException
      */
-    public function getAllArtifacts(string $bearerToken): array
+    public function getAllArtifacts(): array
     {
         $curl = (new Curl())
             ->setHeader('Accept', 'application/vnd.github+json')
-            ->setHeader('Authorization', $bearerToken);
+            ->setHeader('Authorization', $this->bearerToken);
         $curl->get('https://api.github.com/repos/ramsterhad/tenacious-crawler/actions/artifacts');
 
         if ($curl->error) {
@@ -78,21 +80,21 @@ class Repository
      * @throws LocationHeaderNotFoundException
      * @throws NoArtifact
      */
-    public function getLatestArtifactWithContent(string $bearerToken): Artifact
+    public function getLatestArtifactWithContent(): Artifact
     {
         $artifact = $this->getLatestArtifact();
-        $this->downloadContentOfArtifact($bearerToken, $artifact);
+        $this->downloadContentOfArtifact($artifact);
         return $artifact;
     }
 
     /**
      * @throws LocationHeaderNotFoundException
      */
-    public function downloadContentOfArtifact(string $bearerToken, Artifact $artifact): void
+    public function downloadContentOfArtifact(Artifact $artifact): void
     {
         $curl = (new Curl())
             ->setHeader('Accept', 'application/vnd.github+json')
-            ->setHeader('Authorization', $bearerToken);
+            ->setHeader('Authorization', $this->bearerToken);
         $curl->setOpt(CURLOPT_HEADER, true);
 
         $headers = $curl->get($artifact->getArchiveDownloadUrl());
