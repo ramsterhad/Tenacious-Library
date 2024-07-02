@@ -3,7 +3,8 @@
     "type": "library",
     "autoload": {
         "psr-4": {
-            "Ramsterhad\\TenaciousLibrary\\": "src/"
+            "Ramsterhad\\TenaciousLibrary\\": "src/",
+            "Ramsterhad\\TenaciousLibrary\\Test\\": "test/"
         }
     },
     "authors": [
@@ -14,5 +15,8 @@
     "minimum-stability": "stable",
     "require": {
         "curl/curl": "^2.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.2"
     }
 }

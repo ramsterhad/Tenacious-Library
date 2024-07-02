@@ -11,9 +11,9 @@ readonly class Artifact
     private ?ZipArchive $content;
 
     public function __construct(
-        public int $id,
-        public string $createdAt,
-        public string $archiveDownloadUrl,
+        private int $id,
+        private string $createdAt,
+        private string $archiveDownloadUrl,
     ) {}
 
     public function getId(): int
