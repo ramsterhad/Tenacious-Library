@@ -1,0 +1,66 @@
+{
+    "date": "02.07.2024 08:23:55",
+    "tena-slip-active-fit-ultima-medium": {
+        "ardmed.de": {
+            "price": "63,90",
+            "delivery": "4,90",
+            "total": "68,80"
+        },
+        "kiwisto.de": {
+            "price": "89,70",
+            "delivery": "5,95",
+            "total": "95,65"
+        },
+        "vitappo.de": {
+            "price": "56,67",
+            "delivery": "3,95",
+            "total": "60,62"
+        }
+    },
+    "tena-slip-active-fit-plus-medium": {
+        "kiwisto.de": {
+            "price": "73,50",
+            "delivery": "5,95",
+            "total": "79,45"
+        },
+        "saveexpress.de": {
+            "price": "67,80",
+            "delivery": "7,77",
+            "total": "75,57"
+        },
+        "vitappo.de": {
+            "price": "47,85",
+            "delivery": "3,95",
+            "total": "51,80"
+        }
+    },
+    "tena-slip-active-fit-maxi-medium": {
+        "kiwisto.de": {
+            "price": "83,40",
+            "delivery": "5,95",
+            "total": "89,35"
+        },
+        "saveexpress.de": {
+            "price": "80,19",
+            "delivery": "7,77",
+            "total": "87,96"
+        },
+        "vitappo.de": {
+            "price": "50,67",
+            "delivery": "3,95",
+            "total": "54,62"
+        }
+    },
+    "betterdry-m10": {
+        "kiwisto.de": {
+            "price": "78,90",
+            "delivery": "5,95",
+            "total": "84,85"
+        },
+        "saveexpress.de": {
+            "price": "86,18",
+            "delivery": "7,77",
+            "total": "93,95"
+        }
+    }
+}

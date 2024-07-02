@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Ramsterhad\TenaciousLibrary\Test;
+namespace Ramsterhad\TenaciousLibrary\Test\Artifact\Entity;
 
 use PHPUnit\Framework\TestCase;
 use Ramsterhad\TenaciousLibrary\Artifact\Entity\Artifact;

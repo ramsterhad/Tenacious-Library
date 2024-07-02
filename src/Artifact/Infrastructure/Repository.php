@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Ramsterhad\TenaciousLibrary\Artifact\Infrastructure;
 
-use Curl\Curl;
 use Ramsterhad\TenaciousLibrary\Artifact\Entity\Artifact;
 use Ramsterhad\TenaciousLibrary\Artifact\Infrastructure\Exception\CurlException;
 use Ramsterhad\TenaciousLibrary\Artifact\Infrastructure\Exception\LocationHeaderNotFoundException;
 use Ramsterhad\TenaciousLibrary\Artifact\Infrastructure\Exception\NoArtifact;
+use Ramsterhad\TenaciousLibrary\Shared\HttpRequest\Contract\HttpRequestInterface;
 use ZipArchive;
 
 use function file_get_contents;
@@ -17,10 +17,13 @@ use function preg_match;
 use function sys_get_temp_dir;
 use function trim;
 
-class Repository
+final readonly class Repository
 {
-    public function __construct(private readonly string $bearerToken)
-    {}
+    public function __construct(
+        private HttpRequestInterface $httpRequest,
+        private string $bearerToken,
+    ) {}
+
     /**
      * @return Artifact[]
      * @throws NoArtifact
@@ -28,17 +31,17 @@ class Repository
      */
     public function getAllArtifacts(): array
     {
-        $curl = (new Curl())
+        $this->httpRequest
             ->setHeader('Accept', 'application/vnd.github+json')
             ->setHeader('Authorization', $this->bearerToken);
-        $curl->get('https://api.github.com/repos/ramsterhad/tenacious-crawler/actions/artifacts');
+        $this->httpRequest->get('https://api.github.com/repos/ramsterhad/tenacious-crawler/actions/artifacts');
 
-        if ($curl->error) {
-            throw new CurlException((string) $curl->error_code);
+        if ($this->httpRequest->error) {
+            throw new CurlException((string) $this->httpRequest->error_code);
         }
 
-        $artifactsAsJson = $curl->getResponse();
-        $curl->close();
+        $artifactsAsJson = $this->httpRequest->getResponse();
+        $this->httpRequest->close();
 
         $artifacts = json_decode($artifactsAsJson, true);
 
@@ -92,13 +95,13 @@ class Repository
      */
     public function downloadContentOfArtifact(Artifact $artifact): void
     {
-        $curl = (new Curl())
+        $this->httpRequest
             ->setHeader('Accept', 'application/vnd.github+json')
             ->setHeader('Authorization', $this->bearerToken);
-        $curl->setOpt(CURLOPT_HEADER, true);
+        $this->httpRequest->setOpt(CURLOPT_HEADER, true);
 
-        $headers = $curl->get($artifact->getArchiveDownloadUrl());
-        $curl->close();
+        $headers = $this->httpRequest->get($artifact->getArchiveDownloadUrl());
+        $this->httpRequest->close();
 
         preg_match('/location: (.*)/i', $headers->getResponse(), $matches);
 
